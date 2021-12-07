@@ -14,6 +14,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using AuthenticationPlugin;
 
 namespace MultipleConnectionStrings.Controllers
 {
@@ -40,7 +41,7 @@ namespace MultipleConnectionStrings.Controllers
             {
                 Name = registerDto.Name,
                 Email = registerDto.Email,
-                Password = registerDto.Password,
+                Password = SecurePasswordHasherHelper.Hash(registerDto.Password),
                 ConnectionId = registerDto.ConnectionId,
                 DatePosted = DateTime.Now
             };
@@ -67,7 +68,10 @@ namespace MultipleConnectionStrings.Controllers
             User user = await _connection.Users.AsNoTracking()
                 .Include(c => c.Connection).FirstOrDefaultAsync(u => u.Email == loginDto.Email);
 
-            if (user == null || user.Password != loginDto.Password) return BadRequest(errors);
+            if (user == null) return BadRequest(errors);
+
+            if (!SecurePasswordHasherHelper.Verify(loginDto.Password, user.Password)) return Unauthorized();
+
             //create claims details based on the user information
             Claim[] claims = new[] {
                     new Claim(JwtRegisteredClaimNames.Sub, _configuration["Jwt:Subject"]),
@@ -84,7 +88,7 @@ namespace MultipleConnectionStrings.Controllers
             var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(_configuration["Jwt:Issuer"], _configuration["Jwt:Audience"], claims, expires: DateTime.UtcNow.AddDays(1), signingCredentials: signIn);
-            UserResponseDto responseUser = new UserResponseDto
+            UserResponseDto responseUser = new()
             {
                 Id = user.Id,
                 Name = user.Name,

@@ -32,10 +32,24 @@ namespace MultipleConnectionStrings.Controllers
         [HttpGet("GetCars")]
         public async Task<IActionResult> GetCars()
         {
-            string databaseId = Utilities.UserClaim(User.Identity as ClaimsIdentity, "clientDatabase");
-            _propertyContext.Database.SetDbConnection(Utilities.GetStringConnection(databaseId, _propertyContext));
+            ChangeConnectionString();           
             var cars = await _propertyContext.Vehicles.ToListAsync();
             return Ok(cars);
+        }
+
+        [Authorize]
+        [HttpGet("GetHouses")]
+        public async Task<IActionResult> GetHouses()
+        {
+            ChangeConnectionString();
+            var houses = await _propertyContext.Houses.ToListAsync();
+            return Ok(houses);
+        }
+
+        private void ChangeConnectionString()
+        {
+            string databaseId = Utilities.UserClaim(User.Identity as ClaimsIdentity, "clientDatabase");
+            _propertyContext.Database.SetDbConnection(Utilities.GetStringConnection(databaseId, _propertyContext));
         }
     }
 }
