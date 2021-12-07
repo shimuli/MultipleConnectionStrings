@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31911.196
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultipleConnectionStrings", "MultipleConnectionStrings\MultipleConnectionStrings.csproj", "{DB37F031-328B-45DD-B4E3-FFDDD562B234}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DB37F031-328B-45DD-B4E3-FFDDD562B234}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB37F031-328B-45DD-B4E3-FFDDD562B234}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB37F031-328B-45DD-B4E3-FFDDD562B234}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB37F031-328B-45DD-B4E3-FFDDD562B234}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {504D23BE-E3AA-416D-9D96-47F62E3A4FE7}
+	EndGlobalSection
+EndGlobal
